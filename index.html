@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tudo a seu tempo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #countdown p {
+      font-size: 24px;
+    }
+
+    #message p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #confirmation {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button id="discoverBtn">Descubra</button>
+    <div id="countdown" class="hidden">
+      <p id="countdownText"></p>
+    </div>
+    <div id="confirmation" class="hidden">
+      <p>Tem certeza?</p>
+      <button id="confirmBtn">Sim</button>
+      <button id="cancelBtn">Não</button>
+    </div>
+    <div id="message" class="hidden">
+      <p>Daqui a 500 dias, tudo a seu tempo, tudo a seu tempo...</p>
+      <audio id="music" src="music/There Is a Light That Never Goes Out (2011 Remaster).mp3"></audio>
+    </div>
+  </div>
+
+  <script>
+    const discoverBtn = document.getElementById("discoverBtn");
+    const countdown = document.getElementById("countdown");
+    const countdownText = document.getElementById("countdownText");
+    const confirmation = document.getElementById("confirmation");
+    const message = document.getElementById("message");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const music = document.getElementById("music");
+
+    discoverBtn.addEventListener("click", startCountdown);
+
+    function startCountdown() {
+      discoverBtn.classList.add("hidden");
+      countdown.classList.remove("hidden");
+
+      let timeLeft = 5; // 5 segundos de contagem
+      countdownText.textContent = `Aguarde... ${timeLeft}`;
+
+      const interval = setInterval(function() {
+        timeLeft--;
+        countdownText.textContent = `Aguarde... ${timeLeft}`;
+        
+        if (timeLeft === 0) {
+          clearInterval(interval);
+          showConfirmation();
+        }
+      }, 1000);
+    }
+
+    function showConfirmation() {
+      countdown.classList.add("hidden");
+      confirmation.classList.remove("hidden");
+    }
+
+    confirmBtn.addEventListener("click", function() {
+      confirmation.classList.add("hidden");
+      message.classList.remove("hidden");
+      music.play(); // Toca a música quando a frase aparece
+    });
+
+    cancelBtn.addEventListener("click", function() {
+      confirmation.classList.add("hidden");
+      discoverBtn.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
